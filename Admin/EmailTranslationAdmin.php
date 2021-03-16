@@ -2,23 +2,23 @@
 
 namespace Lexik\Bundle\MailerBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 /**
  * EmailTranslationAdmin
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
-class EmailTranslationAdmin extends Admin
+class EmailTranslationAdmin extends AbstractAdmin
 {
     protected $parentAssociationMapping = 'email';
 
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('list');
     }
@@ -26,7 +26,7 @@ class EmailTranslationAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->add(

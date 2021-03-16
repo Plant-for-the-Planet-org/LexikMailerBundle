@@ -2,21 +2,24 @@
 
 namespace Lexik\Bundle\MailerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Layout controller.
  *
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
  */
-class LayoutController extends Controller
+class LayoutController extends AbstractController
 {
     /**
      * List all layouts
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function listAction(Request $request)
     {
@@ -25,7 +28,7 @@ class LayoutController extends Controller
             $request->get('page', 1)
         );
 
-        return $this->render('LexikMailerBundle:Layout:list.html.twig', array_merge(array(
+        return $this->render('Layout/list.html.twig', array_merge(array(
             'layouts' => $pager->getResults(),
             'total'   => $pager->getCount(),
             'page'    => $pager->getPage(),
@@ -41,8 +44,8 @@ class LayoutController extends Controller
      * @param string $layoutId
      * @param string $lang
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws NotFoundHttpException
+     * @return Response
      */
     public function editAction(Request $request, $layoutId, $lang = null)
     {
@@ -62,7 +65,7 @@ class LayoutController extends Controller
             )));
         }
 
-        return $this->render('LexikMailerBundle:Layout:edit.html.twig', array_merge(array(
+        return $this->render('Layout/edit.html.twig', array_merge(array(
             'form'          => $form->createView(),
             'base_layout'   => $this->container->getParameter('lexik_mailer.base_layout'),
             'layout'        => $layout,
@@ -77,8 +80,8 @@ class LayoutController extends Controller
      *
      * @param $layoutId
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws NotFoundHttpException
+     * @return Response
      */
     public function deleteAction($layoutId)
     {
@@ -99,7 +102,7 @@ class LayoutController extends Controller
      * New layout
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function newAction(Request $request)
     {
@@ -110,7 +113,7 @@ class LayoutController extends Controller
             return $this->redirect($this->generateUrl('lexik_mailer.layout_list'));
         }
 
-        return $this->render('LexikMailerBundle:Layout:new.html.twig', array_merge(array(
+        return $this->render('Layout/new.html.twig', array_merge(array(
             'form'   => $form->createView(),
             'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
             'lang'   => \Locale::getDisplayLanguage($this->container->getParameter('locale')),
@@ -121,8 +124,8 @@ class LayoutController extends Controller
      * Delete a translation
      *
      * @param int $translationId
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws NotFoundHttpException
+     * @return RedirectResponse
      */
     public function deleteTranslationAction($translationId)
     {

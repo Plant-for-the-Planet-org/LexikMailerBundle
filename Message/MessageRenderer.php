@@ -26,7 +26,7 @@ class MessageRenderer
      * Construct
      *
      * @param \Twig_Environment                                  $templating
-     * @param \Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader $emailLoader
+     * @param EmailLoader $emailLoader
      *
      * @internal param array $defaultOptions
      */

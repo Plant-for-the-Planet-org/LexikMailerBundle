@@ -6,12 +6,12 @@ use Knp\Menu\ItemInterface as MenuItemInterface;
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
 use Lexik\Bundle\MailerBundle\Form\Type\HeaderType;
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
@@ -19,7 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
-class EmailAdmin extends Admin
+class EmailAdmin extends AbstractAdmin
 {
     /**
      * @var string
@@ -35,9 +35,9 @@ class EmailAdmin extends Admin
     }
 
     /**
-     * {@inheritdoc}
+     * @param RouteCollectionInterface $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('show');
     }
@@ -45,7 +45,7 @@ class EmailAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper): void
     {
         $showMapper
             ->add('reference')
@@ -56,11 +56,11 @@ class EmailAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('General')
-            ->add('reference', 'text', array('required' => true))
+            ->add('reference', 'text', ['required' => true])
             ->add(
                 'layout',
                 null,
@@ -100,7 +100,7 @@ class EmailAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('reference')
@@ -121,7 +121,7 @@ class EmailAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('reference')
@@ -131,9 +131,9 @@ class EmailAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null): void
     {
-        if (!$childAdmin && !in_array($action, array('edit'))) {
+        if (!$childAdmin && !in_array($action, ['edit'])) {
             return;
         }
 
@@ -143,13 +143,13 @@ class EmailAdmin extends Admin
         $object = $this->getObject($id);
 
         $createMenuItem = $menu->addChild(
-            $this->trans('create_translation'),
-            array(
+            $this->getTranslator()->trans('create_translation'),
+            [
                 'route'           => 'admin_lexik_mailer_email_emailtranslation_create',
-                'routeParameters' => array(
+                'routeParameters' => [
                     'id' => $id
-                )
-            )
+                ]
+            ]
         );
 
         $createMenuItem->setLinkAttribute('class', 'lexik-mailer-create');

@@ -100,7 +100,8 @@ class MessageFactory
     public function getEmail($reference)
     {
         if (!isset($this->emails[$reference])) {
-            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
+            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])
+                ->findOneBy(['reference' => $reference]);
         }
 
         $email = $this->emails[$reference];

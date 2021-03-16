@@ -68,7 +68,7 @@ class PreviewGenerator
         $this->renderer->loadTemplates($email);
         $this->renderer->setStrictVariables(false);
 
-        $this->templates['fromName'] = $email->getFromName($this->defaultEmail);
+        $this->templates['fromName'] = $email->getFromName();
         $this->templates['subject'] = $email->getSubject();
         $this->templates['content'] = $email->getBody();
 

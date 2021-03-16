@@ -17,20 +17,18 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('lexik_mailer');
+        $treeBuilder = new TreeBuilder('lexik_mailer');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('admin_email')
-                    ->isRequired()
-                ->end()
-
-                ->scalarNode('base_layout')
-                    ->cannotBeEmpty()
-                    ->defaultValue('LexikMailerBundle::layout.html.twig')
-                ->end()
+            ->scalarNode('admin_email')
+            ->isRequired()
+            ->end()
+            ->scalarNode('base_layout')
+            ->cannotBeEmpty()
+            ->defaultValue('LexikMailerBundle::layout.html.twig')
+            ->end()
 
                 ->integerNode('list_items_per_page')
                     ->defaultValue(20)

@@ -2,23 +2,23 @@
 
 namespace Lexik\Bundle\MailerBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 /**
  * LayoutTranslationAdmin
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
-class LayoutTranslationAdmin extends Admin
+class LayoutTranslationAdmin extends AbstractAdmin
 {
     protected $parentAssociationMapping = 'layout';
 
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('list');
     }
@@ -26,16 +26,16 @@ class LayoutTranslationAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->add(
                 'lang',
                 'language',
-                array(
+                [
                     'required'          => true,
-                    'preferred_choices' => array('fr')
-                )
+                    'preferred_choices' => ['fr']
+                ]
             )
             ->add(
                 'body',

@@ -5,12 +5,13 @@ namespace Lexik\Bundle\MailerBundle\Admin;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
@@ -18,7 +19,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
-class LayoutAdmin extends Admin
+class LayoutAdmin extends AbstractAdmin
 {
     /**
      * @var string
@@ -36,7 +37,7 @@ class LayoutAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('show');
     }
@@ -44,7 +45,7 @@ class LayoutAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper): void
     {
         $showMapper
             ->add('reference')
@@ -54,19 +55,19 @@ class LayoutAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('General')
-            ->add('reference', 'text', array('required' => true))
-            ->add('description', 'textarea', array('required' => false))
+            ->add('reference', 'text', ['required' => true])
+            ->add('description', 'textarea', ['required' => false])
             ->end();
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('reference')
@@ -86,7 +87,7 @@ class LayoutAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('reference');
@@ -95,7 +96,7 @@ class LayoutAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null): void
     {
         if (!$childAdmin && !in_array($action, array('edit'))) {
             return;
@@ -107,7 +108,7 @@ class LayoutAdmin extends Admin
         $object = $this->getObject($id);
 
         $createMenuItem = $menu->addChild(
-            $this->trans('create_translation'),
+            $this->getTranslator()->trans('create_translation'),
             array(
                 'route'           => 'admin_lexik_mailer_layout_layouttranslation_create',
                 'routeParameters' => array(
