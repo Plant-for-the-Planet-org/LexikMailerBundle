@@ -30,7 +30,7 @@ class EmailController extends AbstractController
             $request->get('page', 1)
         );
 
-        return $this->render('Email/list.html.twig', array_merge([
+        return $this->render('@LexikMailer/Email/list.html.twig', array_merge([
             'emails'  => $pager->getResults(),
             'total'   => $pager->getCount(),
             'page'    => $pager->getPage(),
@@ -69,7 +69,7 @@ class EmailController extends AbstractController
             )));
         }
 
-        return $this->render('Email/edit.html.twig', array_merge([
+        return $this->render('@LexikMailer/Email/edit.html.twig', array_merge([
             'form'         => $form->createView(),
             'layout'       => $this->container->getParameter('lexik_mailer.base_layout'),
             'email'        => $email,
@@ -120,7 +120,7 @@ class EmailController extends AbstractController
             return $this->redirect($this->generateUrl('lexik_mailer.email_list'));
         }
 
-        return $this->render('Email/new.html.twig', array_merge([
+        return $this->render('@LexikMailer/Email/new.html.twig', array_merge([
             'form'   => $form->createView(),
             'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
             'lang'   => Locale::getDisplayLanguage($handler->getLocale()),
@@ -148,7 +148,7 @@ class EmailController extends AbstractController
         $preview = $this->get('lexik_mailer.message_preview_generator');
         $preview->getTemplatesPreview($email, $lang);
 
-        return $this->render('Email/previous.html.twig', array_merge([
+        return $this->render('@LexikMailer/Email/preview.html.twig', array_merge([
             'content'  => $preview->get('content'),
             'subject'  => $preview->get('subject'),
             'fromName' => $preview->get('fromName'),

@@ -28,7 +28,7 @@ class LayoutController extends AbstractController
             $request->get('page', 1)
         );
 
-        return $this->render('Layout/list.html.twig', array_merge(array(
+        return $this->render('@LexikMailer/Layout/list.html.twig', array_merge(array(
             'layouts' => $pager->getResults(),
             'total'   => $pager->getCount(),
             'page'    => $pager->getPage(),
@@ -65,7 +65,7 @@ class LayoutController extends AbstractController
             )));
         }
 
-        return $this->render('Layout/edit.html.twig', array_merge(array(
+        return $this->render('@LexikMailer/Layout/edit.html.twig', array_merge(array(
             'form'          => $form->createView(),
             'base_layout'   => $this->container->getParameter('lexik_mailer.base_layout'),
             'layout'        => $layout,
@@ -113,7 +113,7 @@ class LayoutController extends AbstractController
             return $this->redirect($this->generateUrl('lexik_mailer.layout_list'));
         }
 
-        return $this->render('Layout/new.html.twig', array_merge(array(
+        return $this->render('@LexikMailer/Layout/new.html.twig', array_merge(array(
             'form'   => $form->createView(),
             'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
             'lang'   => \Locale::getDisplayLanguage($this->container->getParameter('locale')),
