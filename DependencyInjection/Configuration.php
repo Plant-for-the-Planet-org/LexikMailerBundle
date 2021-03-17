@@ -87,7 +87,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('private_key_path')
-                            ->defaultValue('%kernel.root_dir%/config/dkim.key')
+                            ->defaultValue('%kernel.project_dir%/config/dkim.key')
                         ->end()
                         ->scalarNode('domain')
                             ->defaultValue('localhost')

@@ -8,11 +8,8 @@ use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Model\EmailDestinationInterface;
 use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
-use Lexik\Bundle\MailerBundle\Message\ReferenceNotFoundMessage;
-use Lexik\Bundle\MailerBundle\Message\NoTranslationMessage;
-use Lexik\Bundle\MailerBundle\Message\UndefinedVariableMessage;
-use Lexik\Bundle\MailerBundle\Message\TwigErrorMessage;
 use Lexik\Bundle\MailerBundle\Signer\SignerFactory;
+use Twig\Error\Error;
 
 /**
  * Create some swift messages from email templates.
@@ -189,12 +186,12 @@ class MessageFactory
             $message->setFrom($this->options['admin_email']);
             $message->setTo($this->options['admin_email']);
 
-        } catch (\Twig_Error_Runtime $e) {
+        } catch (\RuntimeException $e) {
             $message = new UndefinedVariableMessage($e->getMessage(), $email->getReference());
             $message->setFrom($this->options['admin_email']);
             $message->setTo($this->options['admin_email']);
 
-        } catch (\Twig_Error $e) {
+        } catch (Error $e) {
             $message = new TwigErrorMessage($e->getRawMessage(), $email->getReference());
             $message->setFrom($this->options['admin_email']);
             $message->setTo($this->options['admin_email']);
