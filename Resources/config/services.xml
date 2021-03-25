@@ -130,16 +130,19 @@
         </service>
 
         <service id="lexik_mailer.form.handler.layout" class="%lexik_mailer.form.handler.layout.class%">
-            <argument type="service" id="form.factory" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%locale%</argument>
         </service>
 
         <!-- DKIM signer -->
         <service id="lexik_mailer.signer.dkim" class="%lexik_mailer.signer_dkim.class%">
             <argument>%lexik_mailer.signer.dkim.default_options%</argument>
-            <tag name="lexik_mailer.signer" label="dkim" />
+            <tag name="lexik_mailer.signer" label="dkim"/>
         </service>
+
+
+
     </services>
 
 </container>

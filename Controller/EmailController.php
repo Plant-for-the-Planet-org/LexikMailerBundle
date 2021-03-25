@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Email controller.
@@ -18,7 +19,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EmailController extends AbstractController
 {
     /**
-     * List all emails
      *
      * @param Request $request
      * @return Response
