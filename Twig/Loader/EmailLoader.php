@@ -4,23 +4,24 @@ namespace Lexik\Bundle\MailerBundle\Twig\Loader;
 
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Twig\Error\LoaderError;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Custom Email template loader.
  *
  * @author Cédric Girard <c.girard@lexik.fr>
  */
-class EmailLoader implements \Twig_LoaderInterface
+class EmailLoader implements LoaderInterface
 {
     /**
      * @var array
      */
-    protected $templates = array();
+    protected $templates = [];
 
     /**
      * @var array
      */
-    protected $updateDates = array();
+    protected $updateDates = [];
 
     /**
      * @param array $templates

@@ -1,13 +1,13 @@
 {% block form_row %}
-{% spaceless %}
-    <div class="form-group">
-        {{ form_label(form, label|default(null)) }}
-        <div class="col-sm-8">
-            {{ form_widget(form, {'attr': {'class': 'form-control'} }) }} {{ append|default(null) }}
-            {{ form_errors(form) }}
+    {% spaceless %}
+        <div class="form-group">
+            {{ form_label(form, label|default(null)) }}
+            <div class="col-sm-8">
+                {{ form_widget(form, {'attr': {'class': 'form-control'} }) }} {{ append|default(null) }}
+                {{ form_errors(form) }}
+            </div>
         </div>
-    </div>
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock form_row %}
 
 {% block checkbox_row %}
@@ -21,19 +21,19 @@
 {% endblock %}
 
 {% block form_label %}
-{% spaceless %}
-    {% if label is not same as(false) -%}
-        {% set label_attr = label_attr|merge({'class': attr.class|default('') ~ 'col-sm-2 control-label'}) %}
-        {% if not compound -%}
-            {% set label_attr = label_attr|merge({'for': id}) %}
+    {% spaceless %}
+        {% if label is not same as(false) -%}
+            {% set label_attr = label_attr|merge({'class': attr.class|default('') ~ 'col-sm-2 control-label'}) %}
+            {% if not compound -%}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {%- endif %}
+            {% if required -%}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {%- endif %}
+            {% if label is empty -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
         {%- endif %}
-        {% if required -%}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {%- endif %}
-        {% if label is empty -%}
-            {% set label = name|humanize %}
-        {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
-    {%- endif %}
-{% endspaceless %}
+    {% endspaceless %}
 {% endblock %}

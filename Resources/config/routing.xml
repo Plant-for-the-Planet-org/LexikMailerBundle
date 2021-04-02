@@ -1,49 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <routes xmlns="http://symfony.com/schema/routing"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <!-- Email -->
-    <route id="lexik_mailer.email_list" path="/email/list">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:EmailController::listAction</default>
-    </route>
-    <route id="lexik_mailer.email_new" path="/email/new">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:EmailController::newAction</default>
-    </route>
-    <route id="lexik_mailer.email_edit" path="/email/edit/{emailId}/{lang}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:EmailController::editAction</default>
-        <default key="lang"/>
-    </route>
-    <route id="lexik_mailer.email_delete" path="/email/delete/{emailId}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:EmailController::deleteAction</default>
-    </route>
-    <route id="lexik_mailer.email_preview" path="/email/preview/{emailId}/{lang}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:EmailController::previewAction</default>
+    <route id="lexik_mailer.email_list" path="/email/list" controller="Lexik\Bundle\MailerBundle\Controller\EmailController::listAction">
     </route>
 
-    <!-- Email Translation -->
-    <route id="lexik_mailer.translation_delete" path="/translation/delete/{translationId}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:EmailController::deleteTranslationAction</default>
-    </route>
-
-    <!-- Layout -->
-    <route id="lexik_mailer.layout_list" path="/layout/list">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:LayoutController::listAction</default>
-    </route>
-    <route id="lexik_mailer.layout_new" path="/layout/new">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:LayoutController::newAction</default>
-    </route>
-    <route id="lexik_mailer.layout_edit" path="/layout/edit/{layoutId}/{lang}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:LayoutController::editAction</default>
+    <route id="lexik_mailer.email_new" path="/email/new" controller="Lexik\Bundle\MailerBundle\Controller\EmailController::newAction"/>
+    <route id="lexik_mailer.email_edit" path="/email/edit/{emailId}/{lang}" controller="Lexik\Bundle\MailerBundle\Controller\EmailController::editAction">
         <default key="lang" />
     </route>
-    <route id="lexik_mailer.layout_delete" path="/layout/delete/{layoutId}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:LayoutController::deleteAction</default>
+    <route id="lexik_mailer.email_delete" path="/email/delete/{emailId}" controller="Lexik\Bundle\MailerBundle\Controller\EmailController::deleteAction" />
+    <route id="lexik_mailer.email_preview" path="/email/preview/{emailId}/{lang}" controller="Lexik\Bundle\MailerBundle\Controller\EmailController::previewAction"/>
+
+    <!-- Email Translation -->
+    <route id="lexik_mailer.translation_delete" path="/translation/delete/{translationId}" controller="Lexik\Bundle\MailerBundle\Controller\EmailController::deleteTranslationAction"/>
+
+    <!-- Layout -->
+    <route id="lexik_mailer.layout_list" path="/layout/list" controller="Lexik\Bundle\MailerBundle\Controller\LayoutController::listAction"/>
+    <route id="lexik_mailer.layout_new" path="/layout/new" controller="Lexik\Bundle\MailerBundle\Controller\LayoutController::newAction"/>
+    <route id="lexik_mailer.layout_edit" path="/layout/edit/{layoutId}/{lang}" controller="Lexik\Bundle\MailerBundle\Controller\LayoutController::editAction">
+        <default key="lang" />
     </route>
+    <route id="lexik_mailer.layout_delete" path="/layout/delete/{layoutId}" controller="Lexik\Bundle\MailerBundle\Controller\LayoutController::deleteAction"/>
 
     <!-- Layout translation -->
-    <route id="lexik_mailer.layout_translation_delete" path="/layout/translation/delete/{translationId}">
-        <default key="_controller">Lexik\Bundle\MailerBundle\Controller:LayoutController::deleteTranslationAction</default>
-    </route>
-
+    <route id="lexik_mailer.layout_translation_delete" path="/layout/translation/delete/{translationId}" controller="Lexik\Bundle\MailerBundle\Controller\LayoutController::deleteTranslationAction"/>
 </routes>
