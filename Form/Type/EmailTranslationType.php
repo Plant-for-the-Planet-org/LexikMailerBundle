@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
@@ -20,30 +21,29 @@ class EmailTranslationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', TextType::class, array(
+            ->add('subject', TextType::class, [
                 'label' => 'lexik_mailer.translations.subject',
-            ))
-            ->add('body', null, array(
-                'attr'  => array('rows' => 20),
+            ])
+            ->add('body', null, [
+                'attr'  => ['rows' => 20],
                 'label' => 'lexik_mailer.translations.body',
-            ))
-            ->add('bodyText', null, array(
-                'attr'  => array('rows' => 20),
+            ])
+            ->add('bodyText', null, [
+                'attr'  => ['rows' => 20],
                 'label' => 'lexik_mailer.translations.body_text',
-            ))
-            ->add('fromAddress', TextType::class, array(
+            ])
+            ->add('fromAddress', TextType::class, [
                 'label' => 'lexik_mailer.translations.from_address',
-            ))
-            ->add('fromName', TextType::class, array(
+            ])
+            ->add('fromName', TextType::class, [
                 'label' => 'lexik_mailer.translations.from_name',
-            ))
-        ;
+            ]);
 
         if ($options['with_language']) {
-            $builder->add('lang', LanguageType::class, array(
+            $builder->add('lang', LanguageType::class, [
                 'preferred_choices' => $options['preferred_languages'],
                 'label'             => 'lexik_mailer.translations.language',
-            ));
+            ]);
         }
     }
 
@@ -52,12 +52,13 @@ class EmailTranslationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\EmailTranslation',
             'with_language'       => true,
-            'preferred_languages' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'),
+            'preferred_languages' => ['en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'],
+            'supported_locales'   => [],
             'translation_domain'  => 'LexikMailerBundle',
-        ));
+        ]);
     }
 
     /**

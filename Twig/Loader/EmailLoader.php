@@ -3,23 +3,25 @@
 namespace Lexik\Bundle\MailerBundle\Twig\Loader;
 
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
+use Twig\Error\LoaderError;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Custom Email template loader.
  *
  * @author Cédric Girard <c.girard@lexik.fr>
  */
-class EmailLoader implements \Twig_LoaderInterface 
+class EmailLoader implements LoaderInterface
 {
     /**
      * @var array
      */
-    protected $templates = array();
+    protected $templates = [];
 
     /**
      * @var array
      */
-    protected $updateDates = array();
+    protected $updateDates = [];
 
     /**
      * @param array $templates
@@ -48,7 +50,7 @@ class EmailLoader implements \Twig_LoaderInterface
         if ($email->getLayout()) {
             // call of getLayoutBody set locale on layout
             $body = $email->getLayoutBody();
-            
+
             // now we can compute correctly the key cache
             $layoutSuffix = $email->getLayout()->getChecksum();
 
@@ -82,6 +84,7 @@ class EmailLoader implements \Twig_LoaderInterface
 
     /**
      * {@inheritdoc}
+     * @throws LoaderError
      */
     public function getSource($name)
     {
@@ -89,7 +92,7 @@ class EmailLoader implements \Twig_LoaderInterface
 
         $name = (string) $name;
         if (!isset($this->templates[$name])) {
-            throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+            throw new LoaderError(sprintf('Template "%s" is not defined.', $name));
         }
 
         return $this->templates[$name];
@@ -135,7 +138,7 @@ class EmailLoader implements \Twig_LoaderInterface
     {
         $name = (string) $name;
         if (!isset($this->templates[$name])) {
-            throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+            throw new LoaderError(sprintf('Template "%s" is not defined.', $name));
         }
 
         if ( isset($this->updateDates[$name]) && $time < $this->updateDates[$name] ) {

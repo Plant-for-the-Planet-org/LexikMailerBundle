@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
         <parameter key="lexik_mailer.default_options" type="collection">
@@ -126,19 +126,32 @@
             <argument type="service" id="form.factory" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument>%locale%</argument>
+            <argument>%lexik_mailer.supported_locales%</argument>
         </service>
 
         <service id="lexik_mailer.form.handler.layout" class="%lexik_mailer.form.handler.layout.class%">
-            <argument type="service" id="form.factory" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument>%locale%</argument>
         </service>
 
         <!-- DKIM signer -->
         <service id="lexik_mailer.signer.dkim" class="%lexik_mailer.signer_dkim.class%">
             <argument>%lexik_mailer.signer.dkim.default_options%</argument>
-            <tag name="lexik_mailer.signer" label="dkim" />
+            <tag name="lexik_mailer.signer" label="dkim"/>
+        </service>
+
+        <service id="Lexik\Bundle\MailerBundle\Controller\EmailController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
+        </service>
+        <service id="Lexik\Bundle\MailerBundle\Controller\LayoutController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <tag name="controller.service_arguments" />
         </service>
     </services>
-
 </container>

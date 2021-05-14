@@ -17,20 +17,21 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('lexik_mailer');
+        $treeBuilder = new TreeBuilder('lexik_mailer');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('admin_email')
-                    ->isRequired()
-                ->end()
-
-                ->scalarNode('base_layout')
-                    ->cannotBeEmpty()
-                    ->defaultValue('LexikMailerBundle::layout.html.twig')
-                ->end()
+            ->scalarNode('admin_email')
+            ->isRequired()
+            ->end()
+            ->scalarNode('supported_locales')
+            ->defaultValue('de en es')
+            ->end()
+            ->scalarNode('base_layout')
+            ->cannotBeEmpty()
+            ->defaultValue('LexikMailerBundle::layout.html.twig')
+            ->end()
 
                 ->integerNode('list_items_per_page')
                     ->defaultValue(20)
@@ -86,7 +87,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('private_key_path')
-                            ->defaultValue('%kernel.root_dir%/config/dkim.key')
+                            ->defaultValue('%kernel.project_dir%/config/dkim.key')
                         ->end()
                         ->scalarNode('domain')
                             ->defaultValue('localhost')
